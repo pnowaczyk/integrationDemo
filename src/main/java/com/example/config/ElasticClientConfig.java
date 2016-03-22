@@ -15,6 +15,9 @@ import java.util.ArrayList;
 @Configuration
 public class ElasticClientConfig {
 
+    public static final String INDEX_NAME = "integration";
+    public static final String TYPE_NAME = "documents";
+
     @Bean(destroyMethod = "close")
     public Client elasticClient(ElasticConfig config) throws UnknownHostException {
         ArrayList<TransportAddress> transportAddresses = new ArrayList<>();

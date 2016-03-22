@@ -1,5 +1,6 @@
 package com.example.rest;
 
+import com.example.config.ElasticClientConfig;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
@@ -14,9 +15,6 @@ import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 @EndpointImplementation
 public class DocumentEndpointImpl implements DocumentEndpoint {
 
-    private static final String INDEX_NAME = "integration";
-    private static final String TYPE_NAME = "documents";
-
     private Client elasticClient;
 
     @Autowired
@@ -27,7 +25,7 @@ public class DocumentEndpointImpl implements DocumentEndpoint {
     @Override
     public String createDocument() throws Exception {
         UUID uuid = UUID.randomUUID();
-        IndexResponse response = elasticClient.prepareIndex("integration", "documents", uuid.toString())
+        IndexResponse response = elasticClient.prepareIndex(ElasticClientConfig.INDEX_NAME, ElasticClientConfig.TYPE_NAME, uuid.toString())
                 .setCreate(true)
                 .setSource(jsonBuilder().startObject().field("uuid", uuid.toString()).field("date", Instant.now()).endObject())
                 .get();
@@ -37,7 +35,7 @@ public class DocumentEndpointImpl implements DocumentEndpoint {
 
     @Override
     public String getDocument(UUID uuid) throws Exception {
-        GetResponse getResponse = elasticClient.prepareGet(INDEX_NAME, TYPE_NAME, uuid.toString()).get();
+        GetResponse getResponse = elasticClient.prepareGet(ElasticClientConfig.INDEX_NAME, ElasticClientConfig.TYPE_NAME, uuid.toString()).get();
 
         if (getResponse.isExists()) {
             return getResponse.getSourceAsString();
