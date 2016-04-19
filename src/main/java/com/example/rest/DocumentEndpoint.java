@@ -11,12 +11,30 @@ import java.util.UUID;
 @Path("/")
 public interface DocumentEndpoint {
 
-    @POST
-    @Path("/document")
-    String createDocument() throws Exception;
+	@POST
+	@Path("/document")
+	String createDocument() throws Exception;
 
-    @GET
-    @Path("/document/{uuid}")
-    @Produces(MediaType.APPLICATION_JSON)
-    String getDocument(@PathParam("uuid") UUID uuid) throws Exception;
+	@GET
+	@Path("/document/{uuid}")
+	@Produces(MediaType.APPLICATION_JSON)
+	String getDocument(@PathParam("uuid") UUID uuid) throws Exception;
+
+	@POST
+	@Path("/document2")
+	String getUUIDAndCreateDocument() throws Exception;
+
+	@GET
+	@Path("/dbDocument/{uuid}")
+	@Produces(MediaType.TEXT_HTML)
+	String getDocumentFromDB(@PathParam("uuid") UUID uuid) throws Exception;
+
+	@POST
+	@Path("/createAndSave")
+	String createAndSaveDocument() throws Exception;
+
+	@GET
+	@Path("/documents")
+	String getAllDocuments();
+
 }

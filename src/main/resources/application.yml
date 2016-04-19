@@ -1,6 +1,6 @@
 elastic:
   cluster:
-    name: elasticsearch_cluster
+    name: elasticsearch
     nodes:
       - localhost
     port: 9300
